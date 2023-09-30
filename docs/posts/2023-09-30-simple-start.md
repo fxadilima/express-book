@@ -30,7 +30,7 @@ deno run -A --watch ./main.tsx
 
 Everything will be fine, because we do not use anything special, and the `public` directory is empty.
 
-## Step 2
+## 👣 Step 2
 
 Now, create the public directory, and store some image for icon inside. Here I am
 using 'book.svg'.
@@ -95,3 +95,28 @@ expect to get from 'public' folder of the server.
 
 What happened?
 
+## 👣 Step 3
+
+Try to cheng the routes into this:
+
+```tsx
+app.get("/", (req: Request, res: Response) => {
+    res.type("text/html");
+    res.send("<!doctype html>\n" + renderToString(<Home title="😁 Hello" message="Apa kabar?"/>));
+})
+.get("/modules/*.js", async (req: Request, res: Response) => {
+    const txt = await Deno.readTextFile(Deno.cwd() + "/public/" + req.url);
+    res.type("text/javascript");
+    res.send(txt);
+})
+.get("/book.svg", async (req, res) => {
+    const img = await Deno.readFile("./public/book.svg");
+    res.type("image/svg+xml");
+    res.send(img);
+});
+```
+
+It works, all right. But, it wasn't something expected. We expect that everything is going to be taken care off
+by Express's `serveStatic`.
+
+I am going to try using **Oak**.

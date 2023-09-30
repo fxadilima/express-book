@@ -41,12 +41,6 @@ function Home(props) {
 }
 
 const app = express();
-const obj = express.static(Deno.cwd() + "/public", {
-    extentions: [ 'svg', 'js', 'png', 'ico' ]
-});
-
-console.log(`Root directory: ${Deno.cwd() + "/public"}`);
-console.log(`obj = ${obj}`);
 
 app.get("/", (req: Request, res: Response) => {
     console.log(`Referrer: ${req.referrer}`);
@@ -57,9 +51,17 @@ app.get("/", (req: Request, res: Response) => {
     const d = await Deno.readTextFile(Deno.cwd() + "/public/modules/test1.js");
     res.type("text/html");
     res.send(`<p>Isi test1.js:<br/>${d}</p>`);
+})
+.get("/modules/*", async (req: Request, res: Response) => {
+    const d = await Deno.readTextFile(Deno.cwd() + "/public/modules/test1.js");
+    res.type("text/javascript");
+    res.send(d);
+})
+.get("/book.svg", async (req: Request, res: Response) => {
+    const d = await Deno.readFile(Deno.cwd() + "/public/book.svg");
+    res.type("image/svg+xml");
+    res.send(d);
 });
-
-app.use(obj);
 
 console.log("Listening to PORT 3000");
 app.listen(3000);

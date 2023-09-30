@@ -41,7 +41,9 @@ function Home(props) {
 }
 
 const app = express();
-app.use(express.static(Deno.cwd() + "/public/"));
+const obj = express.static(Deno.cwd() + "/public");
+console.log(`Root directory: ${Deno.cwd() + "/public"}`);
+console.log(`obj = ${obj}`);
 
 app.get("/", (req: Request, res: Response) => {
     console.log(`Referrer: ${req.referrer}`);
@@ -54,6 +56,7 @@ app.get("/", (req: Request, res: Response) => {
     res.send(`<p>Isi test1.js:<br/>${d}</p>`);
 });
 
+app.use(obj);
 
 console.log("Listening to PORT 3000");
 app.listen(3000);

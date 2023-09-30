@@ -30,7 +30,9 @@ function Home(props) {
                 </div>
                 <div class="w3-bar-block">
                     <p><a class="w3-bar-item w3-btn w3-hover-red" href="/sub/test1">Go to test1</a></p>
-                    <p><button class="w3-btn w3-bar-item" type="button" id="btnTest">Test Event</button></p>
+                    <p><button class="w3-btn w3-bar-item" type="button" id="btnTest" onClick={() => {
+                        document.getElementById("hello")?.innerHTML = "SUCCEEDED...!";
+                    }}>Test Event</button></p>
                     <p><button class="w3-btn w3-bar-item" type="button" id="btnErase">Clear</button></p>
                 </div>
             </div>

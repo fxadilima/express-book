@@ -1,3 +1,0 @@
-For deploying simple projects using deployctl.
-
-ddp_BY0vn6cYH1lWlYX9WL3SRgSxkt6D470JgGf2

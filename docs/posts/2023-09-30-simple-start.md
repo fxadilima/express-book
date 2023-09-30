@@ -90,3 +90,8 @@ But, try to deploy it to Deno Deploy, and use the 'Inspect' from context menu, s
 
 ![Screenshot 2C](../../public/images/main-2C.png)
 
+You still see me showing my white teeth though. but you won't see the icon, and everything you
+expect to get from 'public' folder of the server.
+
+What happened?
+

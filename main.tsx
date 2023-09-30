@@ -50,7 +50,7 @@ app.get("/", (req: Request, res: Response) => {
 .get("/sub/test1", async (req: Request, res: Response) => {
     const d = await Deno.readTextFile(Deno.cwd() + "/public/modules/test1.js");
     res.type("text/html");
-    res.send(`<p>Isi test1.js:<br/>${d}</p>`);
+    res.send(`<div><strong>Isi test1.js:</strong><pre><code>${d}</code></pre></div><a href="/">Back Home</a>`);
 })
 .get("/modules/*", async (req: Request, res: Response) => {
     const d = await Deno.readTextFile(Deno.cwd() + "/public/modules/test1.js");
@@ -59,9 +59,10 @@ app.get("/", (req: Request, res: Response) => {
 })
 .get("/book.svg", async (req: Request, res: Response) => {
     const d = await Deno.readFile(Deno.cwd() + "/public/book.svg");
+    console.log(`req.url: ${req.url}`);
     res.type("image/svg+xml");
     res.send(d);
 });
 
-console.log("Listening to PORT 3000");
-app.listen(3000);
+console.log("Listening to PORT 10000");
+app.listen(10000);

@@ -41,7 +41,7 @@ function Home(props) {
 }
 
 const app = express();
-app.use(express.static(Deno.cwd() + "/public"));
+app.use(express.static(Deno.cwd() + "/public/"));
 
 app.get("/", (req: Request, res: Response) => {
     console.log(`Referrer: ${req.referrer}`);

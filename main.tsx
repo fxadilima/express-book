@@ -41,10 +41,9 @@ function Home(props) {
 }
 
 const app = express();
-const router = express.Router();
 app.use(express.static(Deno.cwd() + "/public"));
 
-router.get("/", (req: Request, res: Response) => {
+app.get("/", (req: Request, res: Response) => {
     console.log(`Referrer: ${req.referrer}`);
     const html = `<!DOCTYPE html>${render(<Home title="Hello" message="This is a test from Deno."/>)}`;
     res.send(html);
@@ -55,7 +54,6 @@ router.get("/", (req: Request, res: Response) => {
     res.send(`<p>Isi test1.js:<br/>${d}</p>`);
 });
 
-app.use(router);
 
 console.log("Listening to PORT 3000");
 app.listen(3000);

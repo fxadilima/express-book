@@ -51,7 +51,8 @@ router.get("/", (req: Request, res: Response) => {
 })
 .get("/sub/test1", async (req: Request, res: Response) => {
     const d = await Deno.readTextFile(Deno.cwd() + "/public/modules/test1.js");
-    res.send(`<p>d.name: ${d}</p>`);
+    res.type("text/html");
+    res.send(`<p>Isi test1.js:<br/>${d}</p>`);
 });
 
 app.use(router);

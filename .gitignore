@@ -2,3 +2,5 @@
 # local testdir
 _tests/
 
+access-token.txt
+

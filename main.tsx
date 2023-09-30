@@ -41,7 +41,10 @@ function Home(props) {
 }
 
 const app = express();
-const obj = express.static(Deno.cwd() + "/public");
+const obj = express.static(Deno.cwd() + "/public", {
+    extentions: [ 'svg', 'js', 'png', 'ico' ]
+});
+
 console.log(`Root directory: ${Deno.cwd() + "/public"}`);
 console.log(`obj = ${obj}`);
 

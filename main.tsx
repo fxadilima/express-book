@@ -1,5 +1,6 @@
 /** @jsxImportSource https://esm.sh/preact */
 import express from "https://esm.sh/v132/express@4.18.2";
+import serveStatic from 'https://esm.sh/serve-static@1.15.0';
 import renderToString from "https://esm.sh/v132/preact-render-to-string@6.2.1/src/index.js";
 
 const PORT = 4000;
@@ -36,11 +37,16 @@ function Home(props) {
     );
 }
 
+app.use(serveStatic(Deno.cwd() + "/public"));
+
 app.get("/", (req: Request, res: Response) => {
     console.log(`GET / path = ${req.path}`);
     res.type("text/html");
     res.send("<!doctype html>\n" + renderToString(<Home title="😁 Hello" message="Apa kabar?"/>));
-}).get("/book.png", async (req, res) => {
+})
+
+/*
+.get("/book.png", async (req, res) => {
     console.log(`GET /book.png path = ${req.path}`);
     const img = await Deno.readFile(Deno.cwd() + "/public/book.png");
     res.type("image/png");
@@ -57,6 +63,7 @@ app.get("/", (req: Request, res: Response) => {
     res.type("text/javascript");
     res.send(txt);
 });
+*/
 
 console.log(`Listening to port: ${PORT}`);
 app.listen(PORT);

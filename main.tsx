@@ -36,7 +36,6 @@ function Home(props) {
                     <p><button class="w3-btn w3-bar-item" type="button" id="btnErase">Clear</button></p>
                 </div>
             </div>
-            <script src="/modules/test1.js"></script>
         </body>
         </html>
     );

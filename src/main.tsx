@@ -60,6 +60,11 @@ app.get("/", (req: Request, res: Response) => {
     res.type("text/html");
     res.send(`<div><strong>Isi test1.js:</strong><pre><code>${d}</code></pre></div><a href="/">Back Home</a>`);
 });
+.get("/book.png", async (req: Request, res: Response) => {
+    const d = await Deno.readFile("../book.png");
+    res.type("image/png");
+    res.send(d);
+});
 
 console.log("Listening to PORT 3000");
 app.listen(3000);

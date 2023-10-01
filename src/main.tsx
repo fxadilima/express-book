@@ -49,7 +49,7 @@ function Home(props) {
 }
 
 const app = express();
-app.use(express.static("public", {redirect: false}));
+app.use(express.static("/public", {redirect: false}));
 
 app.get("/", (req: Request, res: Response) => {
     const html = `<!DOCTYPE html>${render(<Home title="😁 Hello" message={`Apa kabar? CWD: ${Deno.cwd()}`}/>)}`;

@@ -1,12 +1,16 @@
 /** @jsxImportSource https://esm.sh/preact */
-import express from "https://esm.sh/v132/express@4.18.2";
-import serveStatic from 'https://esm.sh/serve-static@1.15.0';
-import renderToString from "https://esm.sh/v132/preact-render-to-string@6.2.1/src/index.js";
+import express from "npm:express@4.18.2";
+import render from "https://esm.sh/preact-render-to-string@6.2.1";
+import runtime from "https://esm.sh/preact/jsx-runtime";
 
-const PORT = 4000;
-const app = express();
-//app.use("/modules", express.static(Deno.cwd() + "/public"));
-//app.use(logger());
+function Card(props) {
+    return (
+        <div class="w3-container w3-card w3-round">
+            <h1>{props.title}</h1>
+            <p>{props.message}</p>
+        </div>
+    );
+}
 
 function Home(props) {
     return (
@@ -19,51 +23,60 @@ function Home(props) {
         <link rel="icon" type="image/png" href="/book.png"/>
         </head>
         <body>
-            <main class="w3-main w3-padding-32">
-                <div class="w3-content w3-card-4 w3-round-large" style="width:50%;">
-                    <header class="w3-container">
-                        <h1>{props.title}</h1>
-                        <p>{props.message}</p>
-                    </header>
-                    <div class="w3-panel w3-black" id="hello"></div>
-                    <div class="w3-container w3-card">
-                        <img src="/book.svg" alt="Book SVG Image" width="100%"/>
-                    </div>
+            <div class="w3-content w3-padding-64" style="width:50%;">
+                <Card title={props.title} message={props.message}/>
+                <div class="w3-display-container w3-hover-opacity w3-padding-16">
+                    <div class="w3-container w3-border w3-animate-top w3-round-large" id="hello"></div>
                 </div>
-            </main>
-            <script src="/modules/test1.js"></script>
+                <div class="w3-bar-block">
+                    <p><a class="w3-bar-item w3-btn w3-hover-red" href="/sub/test1">Go to test1</a></p>
+                    <p><button class="w3-btn w3-bar-item" type="button" id="btnTest">Test Event</button></p>
+                    <p><button class="w3-btn w3-bar-item" type="button" id="btnErase">Clear</button></p>
+                </div>
+                <div class="w3-card w3-round">
+                    <img src="/book.svg" alt="Book" width="100%"/>
+                </div>
+                <script src="/modules/test1.js"></script>
+            </div>
         </body>
         </html>
     );
 }
 
-app.use(serveStatic(Deno.cwd() + "/public"));
+const app = express();
+app.use(express.static(Deno.cwd() + "/public"));
 
 app.get("/", (req: Request, res: Response) => {
-    console.log(`GET / path = ${req.path}`);
-    res.type("text/html");
-    res.send("<!doctype html>\n" + renderToString(<Home title="😁 Hello" message="Apa kabar?"/>));
+    const html = `<!DOCTYPE html>${render(<Home title="😁 Hello" message="Apa kabar?"/>)}`;
+    res.send(html);
 })
-
-/*
-.get("/book.png", async (req, res) => {
-    console.log(`GET /book.png path = ${req.path}`);
-    const img = await Deno.readFile(Deno.cwd() + "/public/book.png");
-    res.type("image/png");
-    res.send(img);
-}).get("/book.svg", async (req, res) => {
-    console.log(`GET /book.svg path = ${req.path}`);
-    console.log(`Getting ${Deno.cwd()}/public/book.svg`)
-    const img = await Deno.readFile(Deno.cwd() + "/public/book.svg");
-    res.type("image/svg+xml");
-    res.send(img);
-}).get("/modules/*.js", async (req: Request, res: Response) => {
-    console.log(`GET /modules path = ${req.path}`);
-    const txt = await Deno.readTextFile(Deno.cwd() + "/public/" + req.path);
+.get("/sub/test1", async (req: Request, res: Response) => {
+    const d = await Deno.readTextFile(Deno.cwd() + "/public/modules/test1.js");
+    res.type("text/html");
+    res.send(`<div><strong>Isi test1.js:</strong><pre><code>${d}</code></pre></div><a href="/">Back Home</a>`);
+})
+.get("/modules/*", async (req: Request, res: Response) => {
+    const d = await Deno.readTextFile(Deno.cwd() + "/public/modules/test1.js");
     res.type("text/javascript");
-    res.send(txt);
+    res.send(d);
+})
+.get("/book.svg", async (req: Request, res: Response) => {
+    const d = await Deno.readFile(Deno.cwd() + "/public/book.svg");
+    console.log(`req.url: ${req.url}`);
+    res.type("image/svg+xml");
+    res.send(d);
+})
+.get("/book.png", async (req: Request, res: Response) => {
+    const d = await Deno.readFile(Deno.cwd() + "/public/book.png");
+    console.log(`req.url: ${req.url}`);
+    res.type("image/png");
+    res.send(d);
+})
+.get("/images/*.png", async (req: Request, res: Response) => {
+    const d = await Deno.readFile(Deno.cwd() + "/public" + req.path);
+    res.type("image/png");
+    res.send(d);
 });
-*/
 
-console.log(`Listening to port: ${PORT}`);
-app.listen(PORT);
+console.log("Listening to PORT 4000");
+app.listen(3000);

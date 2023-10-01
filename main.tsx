@@ -49,39 +49,17 @@ function Home(props) {
 }
 
 const app = express();
-app.use(express.static("public"));
+app.use(express.static("public", {redirect: false}));
 
 app.get("/", (req: Request, res: Response) => {
     const html = `<!DOCTYPE html>${render(<Home title="😁 Hello" message="Apa kabar?"/>)}`;
     res.send(html);
 })
-.get("/book.png", async (req: Request, res: Response) => {
-    const d = await Deno.readFile(Deno.cwd() + "/public/book.png");
-    console.log(`req.url: ${req.url}`);
-    res.type("image/png");
-    res.send(d);
-})
 .get("/sub/test1", async (req: Request, res: Response) => {
     const d = await Deno.readTextFile(Deno.cwd() + "/public/modules/test1.js");
     res.type("text/html");
     res.send(`<div><strong>Isi test1.js:</strong><pre><code>${d}</code></pre></div><a href="/">Back Home</a>`);
-})
-.get("/modules", async (req: Request, res: Response) => {
-    const d = await Deno.readTextFile(Deno.cwd() + "/public/modules/test1.js");
-    res.type("text/javascript");
-    res.send(d);
-})
-.get("/book.svg", async (req: Request, res: Response) => {
-    const d = await Deno.readFile(Deno.cwd() + "/public/book.svg");
-    console.log(`req.url: ${req.url}`);
-    res.type("image/svg+xml");
-    res.send(d);
-})
-.get("/images/*.png", async (req: Request, res: Response) => {
-    const d = await Deno.readFile(Deno.cwd() + "/public" + req.path);
-    res.type("image/png");
-    res.send(d);
 });
 
-console.log("Listening to PORT 4000");
+console.log("Listening to PORT 3000");
 app.listen(3000);

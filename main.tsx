@@ -33,7 +33,7 @@ function Home(props) {
                     <p><button class="w3-btn w3-bar-item" 
                         type="button" 
                         id="btnTest"
-                        onclick={
+                        onClick={
                             document.getElementById("hello").innerHTML = "Direct test succeeded";
                         }>Test Event</button></p>
                     <p><button class="w3-btn w3-bar-item" type="button" id="btnErase">Clear</button></p>

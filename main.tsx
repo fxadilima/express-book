@@ -33,7 +33,7 @@ function Home(props) {
                     <p><button class="w3-btn w3-bar-item" 
                         type="button" 
                         id="btnTest"
-                        onClick={() => {
+                        onclick={() => {
                             document.getElementById("hello").innerHTML = "Direct test succeeded";
                         }}>Test Event</button></p>
                     <p><button class="w3-btn w3-bar-item" type="button" id="btnErase">Clear</button></p>
@@ -52,7 +52,9 @@ const app = express();
 app.use(express.static("public", {redirect: false}));
 
 app.get("/", (req: Request, res: Response) => {
-    const html = `<!DOCTYPE html>${render(<Home title="😁 Hello" message="Apa kabar?"/>)}`;
+    const cwd = Deno.cwd();
+    const html = `<!DOCTYPE html>${render(<Home title="😁 Hello" message={`Apa kabar?
+    CWD: ${cwd}`}/>)}`;
     res.send(html);
 })
 .get("/sub/test1", async (req: Request, res: Response) => {

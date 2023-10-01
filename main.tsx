@@ -44,7 +44,7 @@ function Home(props) {
 }
 
 const app = express();
-app.use(express.static(Deno.cwd() + "/public"));
+app.use(express.static("./public"));
 
 app.get("/", (req: Request, res: Response) => {
     const html = `<!DOCTYPE html>${render(<Home title="😁 Hello" message="Apa kabar?"/>)}`;

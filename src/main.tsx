@@ -7,7 +7,7 @@ function Card(props) {
     return (
         <div class="w3-container w3-card w3-round">
             <h1>{props.title}</h1>
-            <p>{props.message}</p>
+            <div>{props.message}</div>
         </div>
     );
 }
@@ -52,9 +52,7 @@ const app = express();
 app.use(express.static("public", {redirect: false}));
 
 app.get("/", (req: Request, res: Response) => {
-    const cwd = Deno.cwd();
-    const html = `<!DOCTYPE html>${render(<Home title="😁 Hello" message={`Apa kabar?
-    CWD: ${cwd}`}/>)}`;
+    const html = `<!DOCTYPE html>${render(<Home title="😁 Hello" message={`Apa kabar? CWD: ${Deno.cwd()}`}/>)}`;
     res.send(html);
 })
 .get("/sub/test1", async (req: Request, res: Response) => {

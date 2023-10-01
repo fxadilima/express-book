@@ -44,7 +44,7 @@ function Home(props) {
 }
 
 const app = express();
-app.use(express.static("./public"));
+app.use(express.static("public"));
 
 app.get("/", (req: Request, res: Response) => {
     const html = `<!DOCTYPE html>${render(<Home title="😁 Hello" message="Apa kabar?"/>)}`;
@@ -55,7 +55,7 @@ app.get("/", (req: Request, res: Response) => {
     res.type("text/html");
     res.send(`<div><strong>Isi test1.js:</strong><pre><code>${d}</code></pre></div><a href="/">Back Home</a>`);
 })
-.get("/modules/*", async (req: Request, res: Response) => {
+.get("/modules", async (req: Request, res: Response) => {
     const d = await Deno.readTextFile(Deno.cwd() + "/public/modules/test1.js");
     res.type("text/javascript");
     res.send(d);

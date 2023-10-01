@@ -56,7 +56,7 @@ app.get("/", (req: Request, res: Response) => {
     res.send(html);
 })
 .get("/sub/test1", async (req: Request, res: Response) => {
-    const d = await Deno.readTextFile(Deno.cwd() + "/public/modules/test1.js");
+    const d = await Deno.readTextFile(./public/modules/test1.js");
     res.type("text/html");
     res.send(`<div><strong>Isi test1.js:</strong><pre><code>${d}</code></pre></div><a href="/">Back Home</a>`);
 });

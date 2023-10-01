@@ -50,6 +50,12 @@ app.get("/", (req: Request, res: Response) => {
     const html = `<!DOCTYPE html>${render(<Home title="😁 Hello" message="Apa kabar?"/>)}`;
     res.send(html);
 })
+.get("/book.png", async (req: Request, res: Response) => {
+    const d = await Deno.readFile(Deno.cwd() + "/public/book.png");
+    console.log(`req.url: ${req.url}`);
+    res.type("image/png");
+    res.send(d);
+})
 .get("/sub/test1", async (req: Request, res: Response) => {
     const d = await Deno.readTextFile(Deno.cwd() + "/public/modules/test1.js");
     res.type("text/html");
@@ -64,12 +70,6 @@ app.get("/", (req: Request, res: Response) => {
     const d = await Deno.readFile(Deno.cwd() + "/public/book.svg");
     console.log(`req.url: ${req.url}`);
     res.type("image/svg+xml");
-    res.send(d);
-})
-.get("/book.png", async (req: Request, res: Response) => {
-    const d = await Deno.readFile(Deno.cwd() + "/public/book.png");
-    console.log(`req.url: ${req.url}`);
-    res.type("image/png");
     res.send(d);
 })
 .get("/images/*.png", async (req: Request, res: Response) => {
